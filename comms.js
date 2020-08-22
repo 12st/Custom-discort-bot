@@ -14,7 +14,7 @@ const versions = config.versions;
     function hello(robot, mess, args) {
         mess.reply("Привет!");
     }
-    
+
     function help(robot, mess, args) {
         let str;
        commsList.forEach(element => {
@@ -105,6 +105,10 @@ const versions = config.versions;
         }
     }
 
+    function git(robot,mess,args) {
+        mess.channel.send('Ссылка на гит хаб проекта: https://github.com/12st/Custom-discort-bot');
+    }
+
 
 
 let commsList = [
@@ -115,7 +119,8 @@ let commsList = [
     {name: "clear", out: clear, about: "Отчистка"},
     {name: "id", out: userId, about: "Получить id"},
     {name: "react", out: react, about: "Реакция"},
-    {name: "play", out:play, about: "Музыка"}
+    {name: "play", out:play, about: "Музыка"},
+    {name: 'git', out:git, about:"Гит"}
 ];
 
 module.exports.comms = commsList;
