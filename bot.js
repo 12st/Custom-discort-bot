@@ -2,11 +2,8 @@ import clear from './modules/clear.js';
 import play from './modules/play.js';
 import Discord from 'discord.js'; 
 import fs from 'fs'; 
-import packageConfig from './package.json';
 import config from'./config.json'; 
-let token = config.token; 
-let prefix = config.prefix; 
-import ytdl from 'ytdl-core';
+
 
 
 
@@ -14,13 +11,15 @@ const client = new Discord.Client();
 
 client.on("ready", function(){ 
 	console.log(client.user.username + " запустился!");
+	client.user.setActivity(`Use !help for view list of commands.`);
 });
+
 
 client.on("message", function(message) {
 	if (message.author.bot) {return;}
-	if (!message.content.startsWith(prefix)) {return;}
+	if (!message.content.startsWith(config.prefix)) {return;}
 
-	const commandBody = message.content.slice(prefix.length);
+	const commandBody = message.content.slice(config.prefix.length);
 	const args = commandBody.split(' ');
 	const command = args.shift().toLowerCase();
 	try{
@@ -37,14 +36,22 @@ client.on("message", function(message) {
 			break;
 
 		case "help":
-			message.channel.send("Помощь");
+			message.channel.send(
+				"!help отображает список текущих команд \n" +
+				"!ping пингует бота \n" +
+				"!avatar получить ссылку на свой аватар \n" +
+				"!clear {число} удалить последние соообщения \n" +
+				"!userid получить свой id \n" +
+				"!git ссылка на гит репозиторий \n" +
+				"!play {url} подключается к вашему голосовому каналу и запускает видео в аудио формате \n" 
+				);
 			break;
 
 		case "avatar":
 			message.reply(message.author.displayAvatarURL());
 			break;
 
-		case "userId":
+		case "userid":
 			message.channel.send(`Your username: ${message.author.username}\nYour ID: ${message.author.id}`);
 			break;
 		
