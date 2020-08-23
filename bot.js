@@ -14,6 +14,9 @@ client.on("ready", function(){
 	client.user.setActivity(`Use !help for view list of commands.`);
 });
 
+let botConfig = {
+	checkComm: true
+};
 
 client.on("message", function(message) {
 	if (message.author.bot) {return;}
@@ -43,7 +46,8 @@ client.on("message", function(message) {
 				"!clear {число} удалить последние соообщения \n" +
 				"!userid получить свой id \n" +
 				"!git ссылка на гит репозиторий \n" +
-				"!play {url} подключается к вашему голосовому каналу и запускает видео в аудио формате \n" 
+				"!play {url} подключается к вашему голосовому каналу и запускает видео в аудио формате \n" +
+				"!setcheck включение/отключение проверки на правильность команды \n" 
 				);
 			break;
 
@@ -65,6 +69,18 @@ client.on("message", function(message) {
 
 		case "play":
 			play(message, args[0]);
+			break;
+		case "setcheck":
+			if(botConfig.checkComm) {
+				botConfig.checkComm = false;
+				message.channel.send("Проверка отключена");
+			} else {
+				botConfig.checkComm = true;
+				message.channel.send("Проверка включена");
+			}
+			break;
+		default:
+			if(botConfig.checkComm) {message.reply("Неверная команда");}
 			break;
 		}
 	}catch(e) {
